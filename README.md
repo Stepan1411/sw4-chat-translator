@@ -1,98 +1,45 @@
-# SW4 Chat Translator (Client)
+# This mod translates Minecraft chat into multiple languages!
 
-Клиентский мод для Minecraft Fabric, который позволяет переводить сообщения в чате на разные языки.
+### Supported languages:
+- English (english/en)
+- French (french/fr)
+- German (german/de)
+- Russian (russian/ru)
+- Spanish (spanish/es)
 
-## Тип мода
+### Example
+![Replace this with a description](https://cdn.modrinth.com/data/cached_images/9c3f71dbcaaf54c0c0b354e4d56f1e8c8f30e81d_0.webp)
 
-**Client-side** - устанавливается только на клиент. Не требует установки на сервер.
-
-## Возможности
-
-- Перевод текста в чате на различные языки
-- Автоматический перевод входящих сообщений на ваш язык
-- Поддержка множества языков (английский, русский, испанский, французский, немецкий и др.)
-- Интеграция с ModMenu для удобной настройки
-- Простые команды для перевода и настройки
-
-## Использование
-
-### Примеры
-
-Установить русский язык для автоперевода:
-```
-/sw4-translator mylanguage russian
-```
-
-Установить английский язык:
-```
-/sw4-translator mylanguage english
-```
-
-Отключить автоперевод:
-```
-/sw4-translator mylanguage off
-```
-
-Проверить текущий язык:
-```
-/sw4-translator mylanguage
-```
-
-### Команда для установки вашего языка
+### How select language?
 
 ```
-/sw4-translator mylanguage <язык>
+/sw4-translator mylanguage spanish/russian/german/french/english
 ```
 
-После установки языка все входящие сообщения в чате будут автоматически переводиться на ваш язык. Переведенное сообщение появится под оригинальным.
+### How does the mod translate messages?
 
-### Поддерживаемые языки
+Message Interception - The ChatHud.addMessage() mixin intercepts all incoming chat messages.
 
-- `english` / `английский` - Английский
-- `french` / `французский` - Французский
-- `german` / `немецкий` - Немецкий
-- `russian` / `русский` - Русский
-- `spanish` / `испанский` - Испанский
+Text Extraction - Parses the message, separating the player name from the text:
 
-Также можно использовать коды языков напрямую (например, `en`, `fr`, `de`, `ru`, `es`).
+<Player> hello → Player: "Player", text: "hello"
 
-## Как это работает
+HTTP Request to Google Translate - Sends an asynchronous GET request:
 
-1. Установите свой язык командой `/sw4-translator mylanguage <язык>`
-2. Когда кто-то пишет в чат, под его сообщением автоматически появится перевод на ваш язык
-3. Перевод помечен тегом `[язык]` для удобства
-4. Системные сообщения и команды не переводятся
 
-## Установка
-
-1. Убедитесь, что у вас установлен Fabric Loader
-2. Скачайте мод из папки `build/libs/`
-3. Поместите файл `.jar` в папку `mods` вашего клиента Minecraft
-4. Запустите игру
-
-## Сборка
-
-```bash
-./gradlew build
+```
+https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=ru&dt=t&q=hello
 ```
 
-## Запуск клиента для разработки
+sl=auto - autodetect source language
 
-```bash
-./gradlew runClient
-```
+tl=ru - disable language (your selected one)
 
-## Требования
+q=hello - text to translate
 
-- Minecraft 1.21.11
-- Fabric Loader 0.18.4+
-- Fabric API 0.141.3+
-- Java 21
+JSON Response Parsing - Extracts the translated text from Google's JSON response
+Add to Chat - Adds a new message with the translation:
 
-## Интеграция с ModMenu
+Original: <Player>, hello!
 
-Мод поддерживает ModMenu. В меню модов вы найдете информацию о командах и использовании.
-
-## Лицензия
-
-All Rights Reserved
+Translation: <Player> привет
