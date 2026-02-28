@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "sw4-chat-translator",
+  "version": "${version}",
+  "name": "SW4 Chat Translator",
+  "description": "Client-side mod for translating Minecraft chat messages",
+  "authors": ["stepan1411"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/sw4-chat-translator/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "org.stepan1411.sw4ChatTranslator.client.Sw4ChatTranslatorDataGenerator"
+    ],
+    "client": [
+      "org.stepan1411.sw4ChatTranslator.client.Sw4ChatTranslatorClient"
+    ],
+    "modmenu": [
+      "org.stepan1411.sw4ChatTranslator.integration.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    {
+      "config": "sw4-chat-translator.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": "*"
+  }
+}

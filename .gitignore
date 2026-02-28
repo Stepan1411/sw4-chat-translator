@@ -1,0 +1,11 @@
+/.gradle
+/.idea
+/_FABRIC_WIKI
+/build/classes
+/build/devlibs
+/build/loom-cache
+/build/reports
+/build/resources
+/build/tmp
+/run
+/sw4-chat-translator-server
